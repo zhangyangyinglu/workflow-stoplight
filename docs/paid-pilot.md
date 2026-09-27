@@ -28,6 +28,8 @@ Do not send passwords, API keys, private customer data, identity documents, paym
 
 The buyer can run the result locally with Node.js or use the browser demo. Acceptance means the output is valid JSON, the stated assumptions are visible, and the handoff can be followed without hidden context.
 
+See [`examples/paid-pilot-handoff.md`](../examples/paid-pilot-handoff.md) for a synthetic example of the delivery format. It is not a client result.
+
 ## Not included
 
 - coding, repository edits, deployment, or production changes;

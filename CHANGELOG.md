@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3 - 2026-09-28
+
+- Added a synthetic paid-pilot handoff example showing the exact input, decision, checklist, missing evidence, and re-run command.
+
 ## 0.1.2 - 2026-09-28
 
 - Added a zero-install browser demo hosted on GitHub Pages and kept it on the shared deterministic router.
