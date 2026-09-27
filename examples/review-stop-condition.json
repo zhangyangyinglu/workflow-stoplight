@@ -1,0 +1,16 @@
+{
+  "title": "Decide whether an AI-generated feature is ready to ship",
+  "impact": "high",
+  "uncertainty": "medium",
+  "externalSystems": ["source repository", "test runner"],
+  "privateData": false,
+  "reversible": true,
+  "rollback": true,
+  "acceptance": [
+    "B1: the named acceptance criteria pass",
+    "B2: the existing behavior selected as an invariant has not regressed",
+    "B3: the change cannot corrupt persisted state in the tested path",
+    "B4: the relevant failure path is recoverable",
+    "New findings that do not falsify B1-B4 are recorded as backlog, not blockers"
+  ]
+}

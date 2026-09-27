@@ -4,6 +4,7 @@
 
 - Added a token-free public metrics command for Stars, Forks, Issues, watchers, and Releases.
 - Documented how to verify adoption without treating the repository itself as usage evidence.
+- Added a stop-condition example for an AI-generated feature review.
 
 ## 0.1.0 - 2026-09-28
 

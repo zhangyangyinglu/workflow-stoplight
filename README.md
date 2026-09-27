@@ -24,6 +24,7 @@ Requires Node.js 20+ and no package installation.
 npm test
 node bin/route.mjs examples/small-task.json
 node bin/route.mjs examples/high-risk-task.json
+node bin/route.mjs examples/review-stop-condition.json
 ```
 
 To install the command locally:
