@@ -67,6 +67,10 @@ The smallest handoff is:
 
 No account, API key, database, browser extension, or build service is required.
 
+## Optional paid pilot
+
+If you need one workflow configured and handed off, [`docs/paid-pilot.md`](docs/paid-pilot.md) describes a bounded starting offer at **USD 29**. This is a reference price to test with the market, not a claim of a completed sale. Work begins only after written scope and a lawful payment/contract path; credentials and private production access are never required.
+
 ## What it can and cannot do
 
 It can:
