@@ -1,5 +1,8 @@
 # workflow-stoplight
 
+[![CI](https://github.com/zhangyangyinglu/workflow-stoplight/actions/workflows/ci.yml/badge.svg)](https://github.com/zhangyangyinglu/workflow-stoplight/actions/workflows/ci.yml)
+[![Latest release](https://img.shields.io/github/v/release/zhangyangyinglu/workflow-stoplight)](https://github.com/zhangyangyinglu/workflow-stoplight/releases)
+
 `workflow-stoplight` is a dependency-free CLI that routes an AI-assisted task to the smallest safe review path.
 
 It targets a common failure mode: a tiny task becomes a long chain of plans and reviews, while a consequential task has no explicit stop condition. The tool makes the trade-off visible before an agent spends more tokens.
