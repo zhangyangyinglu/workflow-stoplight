@@ -1,0 +1,10 @@
+{
+  "title": "Change a production workflow that sends customer records",
+  "impact": "high",
+  "uncertainty": "high",
+  "externalSystems": ["CRM", "email provider", "production database"],
+  "privateData": true,
+  "reversible": false,
+  "rollback": false,
+  "acceptance": []
+}

@@ -1,0 +1,13 @@
+{
+  "title": "Update a form-to-spreadsheet automation",
+  "impact": "medium",
+  "uncertainty": "medium",
+  "externalSystems": ["form service", "spreadsheet"],
+  "privateData": false,
+  "reversible": true,
+  "rollback": true,
+  "acceptance": [
+    "A test submission creates exactly one row",
+    "A malformed submission is rejected with a readable error"
+  ]
+}

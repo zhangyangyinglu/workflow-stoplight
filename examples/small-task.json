@@ -1,0 +1,13 @@
+{
+  "title": "Fix a typo in a public README",
+  "impact": "low",
+  "uncertainty": "low",
+  "externalSystems": [],
+  "privateData": false,
+  "reversible": true,
+  "rollback": true,
+  "acceptance": [
+    "The corrected word appears in the intended section",
+    "The Markdown still renders without broken links"
+  ]
+}

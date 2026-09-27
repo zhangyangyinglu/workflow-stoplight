@@ -1,0 +1,22 @@
+{
+  "name": "workflow-stoplight",
+  "version": "0.1.0",
+  "description": "A deterministic risk router for AI-assisted work: choose the smallest safe review path before spending tokens.",
+  "type": "module",
+  "bin": {
+    "workflow-stoplight": "./bin/route.mjs"
+  },
+  "scripts": {
+    "route": "node ./bin/route.mjs",
+    "test": "node --test"
+  },
+  "keywords": [
+    "ai-workflow",
+    "claude-code",
+    "codex",
+    "risk-routing",
+    "review-gates",
+    "token-efficiency"
+  ],
+  "license": "MIT"
+}
