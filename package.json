@@ -1,6 +1,6 @@
 {
   "name": "workflow-stoplight",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A deterministic risk router for AI-assisted work: choose the smallest safe review path before spending tokens.",
   "type": "module",
   "bin": {
@@ -9,6 +9,7 @@
   "files": [
     "bin",
     "src",
+    "scripts",
     "examples",
     "docs",
     "schema",
@@ -18,6 +19,7 @@
   ],
   "scripts": {
     "route": "node ./bin/route.mjs",
+    "metrics": "node ./scripts/public-metrics.mjs",
     "test": "node --test"
   },
   "keywords": [

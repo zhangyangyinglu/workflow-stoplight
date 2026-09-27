@@ -38,6 +38,14 @@ printf '%s\n' '{"title":"Change a landing-page headline","impact":"low","uncerta
 
 The output is JSON with a route, risk score, reasons, checklist, and stop conditions. See [`docs/decision-table.md`](docs/decision-table.md) for the rules.
 
+To check public adoption metrics without a GitHub token:
+
+```bash
+npm run metrics -- zhangyangyinglu/workflow-stoplight
+```
+
+This reports the public Star, Fork, Issue, watcher, and Release counts at the time of the request. It does not modify the repository or manufacture adoption.
+
 ## Configuration and delivery
 
 The input is a JSON object. The complete field reference and JSON Schema are in [`docs/configuration.md`](docs/configuration.md) and [`schema/task.schema.json`](schema/task.schema.json).
