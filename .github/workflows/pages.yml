@@ -31,10 +31,16 @@ jobs:
         uses: actions/configure-pages@v5
         with:
           enablement: true
+      - name: Assemble Pages site
+        run: |
+          mkdir -p _site/src
+          cp demo/index.html _site/index.html
+          cp src/router.mjs _site/src/router.mjs
+          touch _site/.nojekyll
       - name: Upload static demo
         uses: actions/upload-pages-artifact@v3
         with:
-          path: demo
+          path: _site
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
