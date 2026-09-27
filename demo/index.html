@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>workflow-stoplight browser demo</title>
+    <style>
+      :root { color-scheme: light dark; --bg: #f4f7fb; --card: #fff; --ink: #172033; --muted: #5c667a; --line: #d9e0eb; --accent: #2657d7; }
+      @media (prefers-color-scheme: dark) { :root { --bg: #101522; --card: #182033; --ink: #f2f5fb; --muted: #aab4c8; --line: #34405a; --accent: #8eabff; } }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      main { max-width: 1080px; margin: 0 auto; padding: 32px 18px 56px; }
+      h1, h2 { line-height: 1.2; }
+      h1 { margin: 0 0 8px; }
+      h2 { margin: 0 0 16px; font-size: 1.2rem; }
+      p { color: var(--muted); }
+      a { color: var(--accent); }
+      .layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; margin-top: 24px; }
+      .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; box-shadow: 0 4px 18px rgb(0 0 0 / 5%); }
+      label { display: block; margin: 14px 0 6px; font-weight: 650; }
+      input, select, textarea, button { font: inherit; }
+      input, select, textarea { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 10px 11px; color: var(--ink); background: var(--bg); }
+      textarea { min-height: 92px; resize: vertical; }
+      .checks { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+      .checks label { display: flex; align-items: center; gap: 8px; margin: 0; font-weight: 500; }
+      .checks input { width: auto; }
+      .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+      button { cursor: pointer; border: 1px solid var(--line); border-radius: 8px; padding: 9px 13px; color: var(--ink); background: var(--bg); }
+      button.primary { color: #fff; border-color: var(--accent); background: var(--accent); }
+      pre { overflow: auto; min-height: 360px; margin: 0; padding: 14px; border-radius: 8px; background: #0d1422; color: #e7edff; font: 13px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      .notice { border-left: 4px solid var(--accent); padding-left: 12px; }
+      .fine { font-size: .9rem; }
+      @media (max-width: 760px) { .layout { grid-template-columns: 1fr; } .checks { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>workflow-stoplight</h1>
+      <p class="notice">A local-in-your-browser demo of the same deterministic router used by the CLI. Your input is not sent anywhere.</p>
+      <p class="fine"><a href="https://github.com/zhangyangyinglu/workflow-stoplight">View the source on GitHub</a> · No API key, account, or installation required.</p>
+
+      <div class="layout">
+        <section class="card" aria-labelledby="task-heading">
+          <h2 id="task-heading">Describe a task</h2>
+          <form id="task-form">
+            <label for="title">Title</label>
+            <input id="title" name="title" required>
+
+            <label for="impact">Impact</label>
+            <select id="impact" name="impact">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+
+            <label for="uncertainty">Uncertainty</label>
+            <select id="uncertainty" name="uncertainty">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+
+            <label for="external-systems">External systems (one per line)</label>
+            <textarea id="external-systems" name="externalSystems" placeholder="source repository&#10;test runner"></textarea>
+
+            <label for="acceptance">Acceptance checks (one per line)</label>
+            <textarea id="acceptance" name="acceptance" placeholder="Named acceptance criteria pass&#10;Existing behavior has not regressed"></textarea>
+
+            <div class="checks">
+              <label><input id="private-data" type="checkbox"> Uses private data</label>
+              <label><input id="reversible" type="checkbox" checked> Readily reversible</label>
+              <label><input id="rollback" type="checkbox" checked> Rollback path exists</label>
+            </div>
+
+            <div class="actions">
+              <button class="primary" type="submit">Route this task</button>
+              <button type="button" data-example="small">Load small example</button>
+              <button type="button" data-example="review">Load stop-condition example</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="card" aria-labelledby="result-heading">
+          <h2 id="result-heading">Routing decision</h2>
+          <pre id="result" aria-live="polite"></pre>
+          <div class="actions">
+            <button id="copy" type="button">Copy JSON</button>
+          </div>
+        </section>
+      </div>
+
+      <p class="fine">This is a routing aid, not a reviewer or safety guarantee. It cannot verify that your facts are true, edit your systems, or prove token savings.</p>
+    </main>
+
+    <script type="module">
+      import { routeTask } from "../src/router.mjs";
+
+      const form = document.querySelector("#task-form");
+      const result = document.querySelector("#result");
+      const lines = (value) => value.split(/[\n,]/).map((item) => item.trim()).filter(Boolean);
+      const examples = {
+        small: {
+          title: "Change a landing-page headline",
+          impact: "low",
+          uncertainty: "low",
+          externalSystems: [],
+          acceptance: ["Headline is visible"],
+          privateData: false,
+          reversible: true,
+          rollback: true
+        },
+        review: {
+          title: "Decide whether an AI-generated feature is ready to ship",
+          impact: "high",
+          uncertainty: "medium",
+          externalSystems: ["source repository", "test runner"],
+          acceptance: [
+            "B1: the named acceptance criteria pass",
+            "B2: the existing behavior selected as an invariant has not regressed",
+            "B3: the change cannot corrupt persisted state in the tested path",
+            "B4: the relevant failure path is recoverable",
+            "New findings that do not falsify B1-B4 are recorded as backlog, not blockers"
+          ],
+          privateData: false,
+          reversible: true,
+          rollback: true
+        }
+      };
+
+      function readTask() {
+        return {
+          title: document.querySelector("#title").value,
+          impact: document.querySelector("#impact").value,
+          uncertainty: document.querySelector("#uncertainty").value,
+          externalSystems: lines(document.querySelector("#external-systems").value),
+          acceptance: lines(document.querySelector("#acceptance").value),
+          privateData: document.querySelector("#private-data").checked,
+          reversible: document.querySelector("#reversible").checked,
+          rollback: document.querySelector("#rollback").checked
+        };
+      }
+
+      function show(task) {
+        result.textContent = JSON.stringify(routeTask(task), null, 2);
+      }
+
+      function loadExample(name) {
+        const task = examples[name];
+        document.querySelector("#title").value = task.title;
+        document.querySelector("#impact").value = task.impact;
+        document.querySelector("#uncertainty").value = task.uncertainty;
+        document.querySelector("#external-systems").value = task.externalSystems.join("\n");
+        document.querySelector("#acceptance").value = task.acceptance.join("\n");
+        document.querySelector("#private-data").checked = task.privateData;
+        document.querySelector("#reversible").checked = task.reversible;
+        document.querySelector("#rollback").checked = task.rollback;
+        show(task);
+      }
+
+      form.addEventListener("submit", (event) => { event.preventDefault(); show(readTask()); });
+      document.querySelectorAll("[data-example]").forEach((button) => button.addEventListener("click", () => loadExample(button.dataset.example)));
+      document.querySelector("#copy").addEventListener("click", async () => {
+        await navigator.clipboard?.writeText(result.textContent);
+      });
+      loadExample("review");
+    </script>
+  </body>
+</html>

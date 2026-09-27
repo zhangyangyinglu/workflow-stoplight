@@ -50,6 +50,10 @@ npm run metrics -- zhangyangyinglu/workflow-stoplight
 
 This reports the public Star, Fork, Issue, watcher, and Release counts at the time of the request. It does not modify the repository or manufacture adoption.
 
+## Try it in a browser
+
+Open the [browser demo](https://zhangyangyinglu.github.io/workflow-stoplight/) to route a synthetic task without installing anything. The demo runs the same `src/router.mjs` logic in your browser; it does not send the form input to a server. The hosted page is a convenience layer, not a separate implementation.
+
 ## Configuration and delivery
 
 The input is a JSON object. The complete field reference and JSON Schema are in [`docs/configuration.md`](docs/configuration.md) and [`schema/task.schema.json`](schema/task.schema.json).
