@@ -34,6 +34,13 @@ npm install --global .
 workflow-stoplight examples/medium-task.json
 ```
 
+From a clean machine, the public GitHub repository can be installed directly without an npm account:
+
+```bash
+npm install --global github:zhangyangyinglu/workflow-stoplight
+workflow-stoplight examples/medium-task.json
+```
+
 You can also pipe a task record:
 
 ```bash
