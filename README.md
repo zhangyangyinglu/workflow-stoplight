@@ -23,6 +23,13 @@ node bin/route.mjs examples/small-task.json
 node bin/route.mjs examples/high-risk-task.json
 ```
 
+To install the command locally:
+
+```bash
+npm install --global .
+workflow-stoplight examples/medium-task.json
+```
+
 You can also pipe a task record:
 
 ```bash
@@ -30,6 +37,36 @@ printf '%s\n' '{"title":"Change a landing-page headline","impact":"low","uncerta
 ```
 
 The output is JSON with a route, risk score, reasons, checklist, and stop conditions. See [`docs/decision-table.md`](docs/decision-table.md) for the rules.
+
+## Configuration and delivery
+
+The input is a JSON object. The complete field reference and JSON Schema are in [`docs/configuration.md`](docs/configuration.md) and [`schema/task.schema.json`](schema/task.schema.json).
+
+The smallest handoff is:
+
+1. copy `examples/small-task.json` and edit the task fields;
+2. run `workflow-stoplight your-task.json`;
+3. attach the JSON output to the task record or review note;
+4. stop when the returned acceptance checks pass, or resolve the returned stop condition first.
+
+No account, API key, database, browser extension, or build service is required.
+
+## What it can and cannot do
+
+It can:
+
+- make a repeatable routing decision from explicit task facts;
+- show why the route was selected;
+- turn supplied acceptance items into a bounded checklist;
+- highlight missing rollback, private-data, and scope decisions.
+
+It cannot:
+
+- inspect whether the supplied facts are truthful;
+- guarantee that a task is safe or that a review is complete;
+- edit a repository, deploy a service, or send a message;
+- read credentials, private files, production systems, or hidden context;
+- prove token savings, revenue, or client outcomes.
 
 ## Example output
 
@@ -58,6 +95,10 @@ The output is JSON with a route, risk score, reasons, checklist, and stop condit
 - It never applies a change; it only returns a routing decision.
 - A risk score is not a security audit and is not a substitute for a qualified reviewer.
 - Examples are synthetic and do not represent paid-client results.
+
+## Feedback and Star
+
+If this is useful, a GitHub Star and a short issue describing the task shape help prioritize the next release. A Star is a signal of interest, not proof of production adoption; the project will report actual Stars, Issues, and releases rather than inventing usage.
 
 ## License
 

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/zhangyangyinglu/workflow-stoplight/blob/main/schema/task.schema.json",
+  "title": "workflow-stoplight task",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "title": { "type": "string", "minLength": 1 },
+    "impact": { "enum": ["low", "medium", "high"] },
+    "uncertainty": { "enum": ["low", "medium", "high"] },
+    "externalSystems": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "privateData": { "type": "boolean" },
+    "reversible": { "type": "boolean" },
+    "rollback": { "type": "boolean" },
+    "acceptance": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  }
+}

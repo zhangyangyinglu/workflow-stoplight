@@ -6,6 +6,16 @@
   "bin": {
     "workflow-stoplight": "./bin/route.mjs"
   },
+  "files": [
+    "bin",
+    "src",
+    "examples",
+    "docs",
+    "schema",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
   "scripts": {
     "route": "node ./bin/route.mjs",
     "test": "node --test"

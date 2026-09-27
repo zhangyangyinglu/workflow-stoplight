@@ -19,7 +19,9 @@ async function readInput(file) {
 }
 
 const file = process.argv[2];
-if (!file) {
+if (file === "--help" || file === "-h") {
+  usage();
+} else if (!file) {
   usage();
   process.exitCode = 2;
 } else {
